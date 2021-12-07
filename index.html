@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Feed</title>
+    <!--Import Google Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="manifest" ref="manifest.json">
+</head>
+<body class="grey-light-4">
+    <nav class="z-depth-0">
+        <div class="nav-wrapper container">
+            <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
+        </div>
+    </nav>
+
+    <ul id="side-menu" class="sidenav side-menu">
+        <li><a href="/">Search</a></li>
+        <li><a href="/pages/custom.html">Create Bookmark</a></li>
+        <li><a href="/pages/about.html">About</a></li>
+    </ul>
+    
+
+    <!-- Search bar -->
+    <div class="input-field container">
+        <i class="material-icons prefix">search</i>
+        <input id="search_box" type="text" placeholder="Search">
+        <button id="search-button" class="waves-effect waves-red btn-small">Search</button>
+    </div>
+
+
+    <!-- Cards -->
+
+    <div id= "news_container" class="news container">
+        </div>
+
+
+
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="/js/ui.js"></script>
+    <script type="module" src="/js/db.js"></script>
+    <script src="/js/app.js"></script>
+    <script defer src="/js/api.js"></script>
+</body>
+
+</html>

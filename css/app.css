@@ -1,0 +1,9 @@
+li {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+};
+
+/* li button {
+    background-color: yellow;
+} */

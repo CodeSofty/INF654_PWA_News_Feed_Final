@@ -1,0 +1,39 @@
+{
+    "name": "News Juice",
+    "short_name": "NJuice",
+    "description": "Find interesting news articles by category or keyword search",
+    "start_url": "index.html",
+    "scope": ".",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "light-grey",
+    "theme_color": "#FFF",
+    "dir": "auto",
+    "language": "en-US",
+    "icons": [
+
+        {
+
+        "src": "img/icons/",
+        "type": "image/png",
+        "sizes": "16x16"
+        },
+
+
+        {
+
+        "src": "img/icons/",
+        "type": "image/png",
+        "sizes": "32x32"
+        },
+
+
+        {
+
+            "src": "img/icons/",
+            "type": "image/png",
+            "sizes": "192x192"
+            }
+        
+    ]
+}
