@@ -26,6 +26,21 @@
         <li><a href="/">Search</a></li>
         <li><a href="/pages/custom.html">Create Bookmark</a></li>
         <li><a href="/pages/about.html">About</a></li>
+
+
+        <li class = "logged-in">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-account">Account</a>
+        </li>
+        <li class = "logged-in" id = "logout">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-login">Logout</a>
+        </li>
+
+        <li class = "logged-out">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-login">Login</a>
+        </li>
+        <li class = "logged-out">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-signup">Sign Up</a>
+        </li>
     </ul>
 
     <div class="container grey-text">
@@ -44,6 +59,7 @@
     <script src="/js/ui.js"></script>
     <script type="module" src="/js/db.js"></script>
     <script src="/js/app.js"></script>
+    <script type = "module" src="/js/auth.js"></script>
 </body>
 
 </html>

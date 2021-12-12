@@ -27,6 +27,20 @@
         <li><a href="/">Search</a></li>
         <li><a href="/pages/custom.html">Create Bookmark</a></li>
         <li><a href="/pages/about.html">About</a></li>
+
+        <li class = "logged-in">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-account">Account</a>
+        </li>
+        <li class = "logged-in" id = "logout">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-login">Logout</a>
+        </li>
+
+        <li class = "logged-out">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-login">Login</a>
+        </li>
+        <li class = "logged-out">
+            <a href = "#" class = "waves-effect modal-trigger" data-target = "modal-signup">Sign Up</a>
+        </li>
     </ul>
     
 
@@ -38,20 +52,77 @@
     </div>
 
 
-    <!-- Cards -->
+<!-- Cards -->
 
-    <div id= "news_container" class="news container">
-        </div>
+    <div id= "news_container" class="news_container"> </div>
 
+<!-- SIGN UP MODAL -->
 
-
+<div id = "modal-signup" class = "modal">
+    <div class = "modal-content">
+        <h4>Sign Up</h4>
+        <form id = "signup-form">
+            <div class = "input-field">
+                <input type = "email" id = "signup-email" required>
+                <label for = "signup-email">Email Address</label>
+            </div>
+            <div class = "input-field">
+                <input type = "password" id = "signup-password" required>
+                <label for = "signup-pasword">Password</label>
+            </div>
+            <button class = "btn yellow darken-2 z-depth-0">Sign Up</button>
+        </form>
     </div>
+</div>
+
+<!--LOGIN MODAL-->
+<div id = "modal-login" class = "modal">
+    <div class = "modal-content">
+        <h4>Login</h4> <br />
+        <form id ="login-form">
+            <div class = "input-field"> 
+                <input type = "email" id = "login-email" required />
+                <label for = "login-email">Email Address</label>
+            <div class = "input-field"> 
+                <input type = "password" id = "login-password" required />
+                <label for = "login-password">Password</label>
+            </div>
+        <button class = "btn yellow darken-2 z-depth-0">Login</button>
+        </form>
+    </div>
+</div>
+
+
+<!--ACCOUNT MODAL-->
+<div id = "modal-account" class = "modal">
+    <div class = "modal-content center-align">
+        <h4>Account details</h4> <br />
+        <div class = "account-details">
+        </div>
+    </div>
+</div>
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="/js/ui.js"></script>
     <script type="module" src="/js/db.js"></script>
     <script src="/js/app.js"></script>
     <script defer src="/js/api.js"></script>
+    <script type = "module" src="/js/auth.js"></script>
 </body>
 
 </html>
+
+
+<!--
+
+    // Work on IndexDB
+
+    Work on Authentication
+
+    Work on getting Update Function to Work
+
+    Clean Up Code
+
+    Make Presentation
+-->

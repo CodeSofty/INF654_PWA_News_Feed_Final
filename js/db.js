@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where} from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, updateDoc, query, where, onSnapshot,  enableIndexedDbPersistence} from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
         // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
     
@@ -22,6 +22,23 @@ import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+
+
+enableIndexedDbPersistence(db)
+.catch((err) => {
+    if (err.code == 'failed-precondition') {
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+
+        console.log('Persistence Failed');
+    } else if (err.code == 'unimplemented') {
+        // The current browser does not support all of the
+        // features required to enable persistence
+        console.log('Persistence is Not Valid');
+    }
+});
+
 // Get a list of bookmarks from your database
 async function getBookmarks(db) {
     const bookmarkCol = collection(db, 'bookmarks');
@@ -34,47 +51,34 @@ async function getBookmarks(db) {
 const bookmarkList = document.querySelector('#user_bookmarks');
 const form = document.querySelector('#add-bookmark-form');
 
-// Creates new list elements and adds them to the DOM, fills them with doc data
-function renderBookmarks(dcs) {
-    let li = document.createElement('li');
-    let title = document.createElement('span');
-    let description = document.createElement('p');
-    let source = document.createElement('span');
-    let delete_bttn = document.createElement('button');
 
-    li.setAttribute('data-id', dcs.id);
-    title.textContent = dcs.data().title;
-    description.textContent = dcs.data().description;
-    source.textContent = dcs.data().link;
-    delete_bttn.textContent = 'DELETE';
-    delete_bttn.style.cursor = 'pointer';
-    li.appendChild(title);
-    li.appendChild(description);
-    li.appendChild(source);
-    li.appendChild(delete_bttn);
-    delete_bttn.classList.add = 'waves-effect waves-light btn';
-
-    li.classList.add = 'collection-item';
-
-
-    bookmarkList.appendChild(li);
 
 // Delete bookmarks
 
-delete_bttn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    let id = e.target.parentElement.getAttribute('data-id');
-    deleteDoc(doc(db, 'bookmarks', id));
-})
+const bookmark_container = document.querySelector('.user_bookmarks');
+bookmark_container.addEventListener('click', (event)=>{
+    if(event.target.tagName === 'BUTTON') {
+        event.stopPropagation();
+        let id = event.target.parentElement.getAttribute('data-id');
+        deleteDoc(doc(db, 'bookmarks', id));
+    }
+});
 
-}
 
-//Get snapshot of doc data, then pass it to the renderBookmarks function
-const bookmarks = getDocs(collection(db, 'bookmarks')).then((snapshot) => {
-    snapshot.forEach((doc) => {
-        renderBookmarks(doc);
-    })
-})
+// Update bookmark
+
+// li.addEventListener('click', (e) => {
+//     let id = e.target.parentElement.getAttribute('data-id');
+//     const upDoc = doc(db, 'bookmarks', id);
+//     updateDoc(upDoc, {
+//         title: form.title.value,
+//         description: form.description.value,
+//         link: form.link.value
+//     })
+// });
+
+// }
+
 
 // Create New Bookmark 
 form.addEventListener(('submit'), (e) => {
@@ -83,18 +87,35 @@ form.addEventListener(('submit'), (e) => {
         title: form.title.value,
         description: form.description.value,
         link: form.link.value
-    });
+    }).catch((error) => console.log(error));
+        form.title.value = "";
+        form.description.value= "";
+        form.link.value= "";
 
 
 // Read Bookmark by title
     let search_button = document.getElementById('keyword_search_bttn');
-    search_button.addEventListener('click', (e) => {
+    search_button.addEventListener ('click', async (e) => {
         e.preventDefault();
         let keyword_value = document.getElementById('keyword_search').value;
-        const q = query(collection(db, 'bookmarks'), where('title', '==', 'test'));
-        const querySnapShot =  getDocs(q);
+        const q = query(collection(db, 'bookmarks'), where('title', '==', `${keyword_value}`));
+        const querySnapShot = await getDocs(q);
         querySnapShot.forEach((doc) => {
             console.log(doc.id, '=>', doc.data());
         });
     })
 })
+
+const unsub = onSnapshot(collection(db, 'bookmarks'), (doc) => {
+    doc.docChanges().forEach((change) => {
+        if(change.type === 'added') {
+    let data = change.doc.data();
+    let id = change.doc.id;
+    renderBookmark(data, id);
+        } 
+
+        if(change.type === 'removed') {
+            removeBookmark(change.doc.id);
+        }
+    });
+});

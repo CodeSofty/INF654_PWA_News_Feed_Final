@@ -1,6 +1,6 @@
-const staticCache = 'Static-v1';
+const staticCache = 'Static-v22';
 // Dynamic Assets for App Shell
-const dynamicCache = 'Dynamic-cache-v1';
+const dynamicCache = 'Dynamic-cache-v22';
 
 // Static Assets for App Shell
 const assets = [
@@ -57,14 +57,16 @@ self.addEventListener("fetch", function(e) {
     // Fires when the app requests a resource (file or data)
     // console.log(`SW: Fetching ${e.request.url}`);
     // Go get the requested resource from the network
-    e.respondWith(caches.match(e.request).then((response) => {
-        return response || fetch(e.request).then(fetchRes => {
-            return caches.open(dynamicCache).then(cache => {
-                cache.put(e.request.url, fetchRes.clone());
-                limitCacheSize(dynamicCache, 7);
-                return fetchRes;
-            });
-        }); 
-    })
-    );
+    if(e.request.url.indexOf("firestore.google.apis.com") === -1) {
+        e.respondWith(caches.match(e.request).then((response) => {
+            return response || fetch(e.request).then(fetchRes => {
+                return caches.open(dynamicCache).then(cache => {
+                    cache.put(e.request.url, fetchRes.clone());
+                    limitCacheSize(dynamicCache, 15);
+                    return fetchRes;
+                });
+            }); 
+        })
+        );
+    }
 });
