@@ -1,6 +1,6 @@
-const staticCache = 'Static-v22';
+const staticCache = 'Static-v11';
 // Dynamic Assets for App Shell
-const dynamicCache = 'Dynamic-cache-v22';
+const dynamicCache = 'Dynamic-cache-v11';
 
 // Static Assets for App Shell
 const assets = [
